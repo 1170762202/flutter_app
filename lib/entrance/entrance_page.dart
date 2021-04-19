@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/entrance/tabs/tab1_page.dart';
 import 'package:flutter_app/entrance/tabs/tab2_page.dart';
 import 'package:flutter_app/entrance/tabs/tab3_page.dart';
+import 'package:flutter_app/notify/count_notify.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import 'bloc/entrance_bloc.dart';
 
@@ -83,6 +85,7 @@ class BodyPage extends StatelessWidget {
             BlocProvider.of<EntranceBloc>(context)
                 .add(AddEvent(count: index));
 
+            Provider.of<CountNotify>(context,listen: false).addCount();
           },
           elevation: 5,
           currentIndex: state.selectedIndex!,

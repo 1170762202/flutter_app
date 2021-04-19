@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/base/app_page_route.dart';
 import 'package:flutter_app/base/routes.dart';
+import 'package:flutter_app/entrance/bloc/entrance_bloc.dart';
+import 'package:flutter_app/entrance/cubit/entrance_cubit.dart';
+import 'package:flutter_app/notify/count_notify.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   // debugPaintSizeEnabled = true; //打开视觉调试开关
@@ -11,7 +15,12 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(MyApp());
+    runApp(MultiProvider(
+      providers: [
+        Provider(create: (_) => CountNotify()),
+      ],
+      child: MyApp(),
+    ));
   });
 }
 
@@ -40,8 +49,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
             ),
             initialRoute: '/',
-            onGenerateRoute: onGenerateRoute
-        );
+            onGenerateRoute: onGenerateRoute);
       },
     );
   }
