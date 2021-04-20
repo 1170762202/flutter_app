@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/base/app_page_route.dart';
@@ -20,11 +21,10 @@ void main() {
     ));
   });
 }
-
 // ignore: top_level_function_literal_block
 final onGenerateRoute = (RouteSettings settings) {
-  final String? name = settings.name;
-  final Function? pageBuilder = routes[name];
+  final String? routeName = settings.name;
+  final Function? pageBuilder = routes[routeName];
   final Route route = AppPageRoute(
       builder: (context) => pageBuilder!(context), settings: settings);
   return route;
