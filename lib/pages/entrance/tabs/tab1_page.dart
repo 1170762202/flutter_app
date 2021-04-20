@@ -17,7 +17,7 @@ class Tab1Page extends StatelessWidget {
   }
 
   Widget build1(BuildContext context) {
-    return Center(child: Text('首页${context.watch<CountNotify>().count}'));
+    return Center(child: Text('首页计数${context.watch<CountNotify>().count}'));
 
     // child: Consumer<CountNotify>(builder: (context, notifier, child) {
     //     return Text('首页${notifier.count}');
