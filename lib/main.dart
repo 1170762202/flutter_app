@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/base/app_page_route.dart';
 import 'package:flutter_app/base/routes.dart';
-import 'package:flutter_app/entrance/bloc/entrance_bloc.dart';
-import 'package:flutter_app/entrance/cubit/entrance_cubit.dart';
 import 'package:flutter_app/notify/count_notify.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +14,7 @@ void main() {
       .then((_) {
     runApp(MultiProvider(
       providers: [
-        Provider(create: (_) => CountNotify()),
+        ChangeNotifierProvider(create: (_) => CountNotify()),
       ],
       child: MyApp(),
     ));

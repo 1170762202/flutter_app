@@ -1,30 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/entrance/tabs/tab1_page.dart';
-import 'package:flutter_app/entrance/tabs/tab2_page.dart';
+import 'package:flutter_app/notify/count_notify.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
-import 'cubit/entrance_cubit.dart';
+import 'bloc/entrance_bloc.dart';
+import 'tabs/tab1_page.dart';
+import 'tabs/tab2_page.dart';
 import 'tabs/tab3_page.dart';
-
 
 ///@author: 张鲤仙
 ///@email: lixian.zhang@joymo.tech
 ///@created: 2021/4/16 4:13 PM
 
-class EntrancePage1 extends StatefulWidget {
+class EntrancePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return EntrancePageState1();
+    return EntrancePageState();
   }
 }
 
-class EntrancePageState1 extends State<EntrancePage1> {
+class EntrancePageState extends State<EntrancePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => EntranceCubit(),
+      create: (BuildContext context) =>
+          EntranceBloc()..add(EntranceInitEvent()),
       child: BodyPage(),
     );
   }
@@ -33,6 +35,7 @@ class EntrancePageState1 extends State<EntrancePage1> {
 Image getTabImage(String path) =>
     Image.asset(path, width: 28.0.w, height: 28.0.h, fit: BoxFit.cover);
 
+// ignore: must_be_immutable
 class BodyPage extends StatelessWidget {
   List tabbarConfig = [
     {
@@ -63,9 +66,9 @@ class BodyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EntranceCubit, EntranceCubitState>(builder: (context, state) {
+    return BlocBuilder<EntranceBloc, EntranceState>(builder: (context, state) {
       return Scaffold(
-        appBar: AppBar(title: Text('Bloc1')),
+        appBar: AppBar(title: Text('Bloc')),
         body: tabbarConfig[state.selectedIndex!]["page"],
         bottomNavigationBar: bottomNavigation(),
       );
@@ -73,12 +76,15 @@ class BodyPage extends StatelessWidget {
   }
 
   Widget bottomNavigation() {
-    return BlocBuilder<EntranceCubit, EntranceCubitState>(builder: (context, state) {
+    return BlocBuilder<EntranceBloc, EntranceState>(builder: (context, state) {
       return Container(
         child: BottomNavigationBar(
           onTap: (index) {
             debugPrint('当前页：$index');
-            BlocProvider.of<EntranceCubit>(context).switchTab(index);
+            BlocProvider.of<EntranceBloc>(context)
+                .add(SwitchTabEvent(selectedIndex: index));
+            BlocProvider.of<EntranceBloc>(context).add(AddEvent(count: index));
+            context.read<CountNotify>().addCount();
           },
           elevation: 5,
           currentIndex: state.selectedIndex!,

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/entrance/bloc/entrance_bloc.dart';
-import 'package:flutter_app/entrance/cubit/entrance_cubit.dart';
+import 'package:flutter_app/pages/entrance/bloc/entrance_bloc.dart';
+import 'package:flutter_app/pages/entrance/cubit/entrance_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 ///@author: 张鲤仙
